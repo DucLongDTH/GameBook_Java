@@ -1,4 +1,5 @@
 GameBook\Menu$9.class
+GameBook\Login$4.class
 GameBook\Menu$3.class
 GameBook\Menu$8.class
 GameBook\Menu$2.class
@@ -9,6 +10,7 @@ GameBook\Menu$6.class
 GameBook\Tools\GameBookTools.class
 GameBook\Menu.class
 GameBook\Login$2.class
+GameBook\Tools\Account.class
 GameBook\Login.class
 GameBook\Tools\GameObject.class
 GameBook\Menu$1.class

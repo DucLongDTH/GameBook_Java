@@ -107,7 +107,7 @@ public class Menu extends JFrame {
         /*
          * btnUser
          */
-        btnUser = new JButton("User Name");
+        btnUser = new JButton("Admin");
         btnUser.setBorder(null);
         btnUser.setBounds(0, 699, 191, 50);
         btnUser.setFont(new Font("Google Sans", Font.PLAIN, 16));
@@ -183,7 +183,7 @@ public class Menu extends JFrame {
         /*
          * lbCount
          */
-        lbCount = new JLabel("(0)");
+        lbCount = new JLabel("(11)");
         lbCount.setBounds(85, 13, 85, 35);
         lbCount.setFont(new Font("Google Sans", Font.BOLD, 24));
         lbCount.setForeground(Color.WHITE);
@@ -197,6 +197,7 @@ public class Menu extends JFrame {
         tbSearch.setBorder(null);
         tbSearch.setBounds(13, 2, 289, 30);
         tbSearch.setCaretColor(new Color(237, 28, 36));
+        tbSearch.setToolTipText("nhập tên Game bạn cần tìm !");
         /*
          * pnSearch
          */
@@ -214,6 +215,7 @@ public class Menu extends JFrame {
         btnSearch.setBorder(null);
         btnSearch.setBounds(337, 9, 160, 34);
         btnSearch.setFocusable(false);
+        btnSearch.setToolTipText("bấm để tìm kiếm ");
         btnSearch.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -229,8 +231,8 @@ public class Menu extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                String Name = tbSearch.getText();
-               int dem = timkiem(Name);   
-               
+               int dem = timkiem(Name); 
+               lbCount.setText("("+ dem + ")");           
             }
         });
         /*
@@ -245,6 +247,7 @@ public class Menu extends JFrame {
         cbSort.setBackground(new Color(39, 40, 47));
         cbSort.setFocusable(false);
         cbSort.setEditable(false);
+        cbSort.setToolTipText("sắp xếp theo cái bạn chọn");
         cbSort.setUI(new BasicComboBoxUI());
         cbSort.addActionListener(new ActionListener() {
             @Override
@@ -275,6 +278,7 @@ public class Menu extends JFrame {
         cbSortType.setBackground(new Color(39, 40, 47));
         cbSortType.setFocusable(false);
         cbSortType.setEditable(false);
+        cbSortType.setToolTipText("sắp xếp theo cái bạn chọn");
         cbSortType.setUI(new BasicComboBoxUI());
         /*
          * btnSort
@@ -286,6 +290,7 @@ public class Menu extends JFrame {
         btnSort.setBorder(null);
         btnSort.setBounds(955, 9, 160, 34);
         btnSort.setFocusable(false);
+        btnSort.setToolTipText("bấm để bắt đầu sắp xếp");
         btnSort.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -297,6 +302,43 @@ public class Menu extends JFrame {
                 btnSort.setBackground(new Color(218, 17, 6));
             }
         });
+        btnSort.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(cbSort.getSelectedItem().toString() == "Name" && cbSortType.getSelectedItem().toString() == "A - Z" ){
+                    GameBookTools tool = new GameBookTools();
+                    tool.sapxep_AZ(Glist);
+                    Test();
+                }
+                if(cbSort.getSelectedItem().toString() == "Name" && cbSortType.getSelectedItem().toString() == "Z - A" ){
+                    GameBookTools tool = new GameBookTools();
+                    tool.sapxep_ZA(Glist);
+                    Test();
+                }
+                if(cbSort.getSelectedItem().toString() == "Release Date" && cbSortType.getSelectedItem().toString() == "Newest - Oldest" ){
+                    GameBookTools tool = new GameBookTools();
+                    tool.sapxep_Datenew(Glist);
+                    Test();
+                }
+                if(cbSort.getSelectedItem().toString() == "Release Date" && cbSortType.getSelectedItem().toString() == "Oldest - Newest" ){
+                    GameBookTools tool = new GameBookTools();
+                    tool.sapxep_Dateold(Glist);
+                    Test();
+                }
+                if(cbSort.getSelectedItem().toString() == "Price" && cbSortType.getSelectedItem().toString() == "Low - High" ){
+                    GameBookTools tool = new GameBookTools();
+                    tool.sapxep_LH(Glist);
+                    Test();
+                }
+                if(cbSort.getSelectedItem().toString() == "Price" && cbSortType.getSelectedItem().toString() == "High - Low" ){
+                    GameBookTools tool = new GameBookTools();
+                    tool.sapxep_HL(Glist);
+                    Test();
+                }
+                
+            }
+        });
+        
         /*
          * pnTool
          */
@@ -397,12 +439,7 @@ public class Menu extends JFrame {
         setIconImage(new ImageIcon("res/icon/icon.png").getImage());
         setLocationRelativeTo(null);
         setTitle("Menu");
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowOpened(WindowEvent e) {
-                
-            }
-        });
+        
     }
     private GameObject[] Glist = new GameObject[]{
             new GameObject(1, "Saints Row: The Third Remastered", "22/05/2020", "1.04", "1500000"),
@@ -426,12 +463,17 @@ public class Menu extends JFrame {
          for(int i =0; i< Glist.length; i++){
              if(Glist[i].getGameTitle().contains(Name) == true){
                 pnDisplay.add(new ListMember(Glist[i]));
+                if (i < Glist.length - 1) {
+                pnDisplay.add(Box.createRigidArea(new Dimension(0, 5)));
+                }
                 dem++;
              }
          }
+         if(dem == 0) pnDisplay.removeAll();
          return dem;
     }
     public void Test() {
+        
         pnDisplay.removeAll();
         for (int i = 0; i < Glist.length; i++) {
             pnDisplay.add(new ListMember(Glist[i]));
@@ -439,5 +481,5 @@ public class Menu extends JFrame {
                 pnDisplay.add(Box.createRigidArea(new Dimension(0, 5)));
             }
         }
-    }
+    }      
 }

@@ -12,6 +12,6 @@ package GameBook;
 public class Program {
 
     public static void main(String[] args) {
-        new Menu().setVisible(true);
+        new Login().setVisible(true);
     }
 }

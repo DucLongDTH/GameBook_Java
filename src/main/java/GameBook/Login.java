@@ -8,6 +8,7 @@ package GameBook;
 import GameBook.Tools.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 /**
@@ -46,6 +47,8 @@ public class Login extends JFrame {
     }
 
     private void InitializeComponent() {
+        ArrayList<Account> dsacc = new ArrayList<>();
+        Account tkAccount = new Account("admin", "admin");
         /*
          * lbLogoIcon
          */
@@ -206,6 +209,26 @@ public class Login extends JFrame {
             @Override
             public void mouseExited(MouseEvent e) {
                 btnSignIn.setBackground(new Color(218, 17, 6));
+            }
+        });
+        btnSignIn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dsacc.add(tkAccount);
+                String Tk = tbUsername.getText();
+                char[] ps = tbPassword.getPassword();
+                String myPass = new String(ps);
+                if(dsacc.get(0).getUsername().equals(Tk) && dsacc.get(0).getPasswordString().equals(myPass)){
+                    JOptionPane.showMessageDialog(rootPane,"Đăng nhập thành công");
+                    setVisible(false);
+                    Menu form = new Menu();
+                    form.setVisible(true);
+                }
+                else  {
+                    JOptionPane.showMessageDialog(rootPane,"Đăng nhập thất bại");
+                    tbPassword.setText("");
+                    tbUsername.setText("");
+                }
             }
         });
         /*
